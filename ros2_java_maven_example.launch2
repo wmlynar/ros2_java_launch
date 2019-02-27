@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="host" default="192.168.0.201" />
+
+  <node pkg="ros2_java_maven_example" name="ros2_java_maven_example" type="ros2-java-maven-example.sh">
+    <remap from="topic" to="/scan" />
+    
+    <param name="frame_id" value="base_laser_link"/>
+    <param name="host" value="$(arg host)" />
+  </node>
+
+</launch>
+
+
