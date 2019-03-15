@@ -291,21 +291,32 @@ public class RosUtil
 	private static List<File> searchDirectory(final File dir, final String filename)
 	{
 		List<File> subFiles = new ArrayList<File>();
-
-		for (File subFile : dir.listFiles())
-		{
-			if (subFile.exists() && subFile.isFile())
+		
+		if(dir==null) {
+			int i=0;
+		}
+		
+		try {
+			for (File subFile : dir.listFiles())
 			{
-				if (subFile.getName().compareTo(filename) == 0) {
-					subFiles.add(subFile);
+				if (subFile.exists() && subFile.isFile())
+				{
+					if (subFile.getName().compareTo(filename) == 0) {
+						subFiles.add(subFile);
+					}
+				}
+
+				if (subFile.exists() && subFile.isDirectory()) {
+					// Search the sub directory for files
+					List<File> dirFiles = searchDirectory(subFile, filename);
+					subFiles.addAll(dirFiles);
 				}
 			}
-
-			if (subFile.exists() && subFile.isDirectory()) {
-				// Search the sub directory for files
-				List<File> dirFiles = searchDirectory(subFile, filename);
-				subFiles.addAll(dirFiles);
-			}
+		} catch (NullPointerException e) {
+			// JVM bug on my machine
+			// Throws nullpointer when dir is
+			// /home/XXX/ros2_java_ws/tmp/.local/share
+			//from within listFiles() method
 		}
 
 		return subFiles;
