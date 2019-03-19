@@ -32,6 +32,7 @@ public class ArgumentParser
 	private static final String TIMEOUT_OPTION = "timeout";
 	private static final String VERBOSE_OPTION = "verbose";
 	private static final String WAIT_OPTION = "wait";
+	private static final String ENV_VAR_OPTION = "env-var";
 
 	// Special options
 	private static final String HOSTNAME_SPECIAL_OPTION = "__hostname";
@@ -66,6 +67,8 @@ public class ArgumentParser
 	/** A List containing Lists of options that cannot be specified simultaneously */
 	List<List<String>> m_invalidPairedOptions;
 
+	private String m_env_var;
+	
 	/**
 	 * Constructor
 	 *
@@ -111,6 +114,7 @@ public class ArgumentParser
 		m_optionsWithValues.add(RUN_ID_OPTION);
 		m_optionsWithValues.add(SERVER_URI_OPTION);
 		m_optionsWithValues.add(TIMEOUT_OPTION);
+		m_optionsWithValues.add(ENV_VAR_OPTION);
 
 		// Create a map from single dash options to their
 		// double dash options
@@ -700,6 +704,15 @@ public class ArgumentParser
 			return m_specialArgs.get(option);
 		}
 		else {
+			return null;
+		}
+	}
+	
+	public String getEnvVar()
+	{
+		if(hasOption(ENV_VAR_OPTION)) {
+			return getOption(ENV_VAR_OPTION);
+		} else {
 			return null;
 		}
 	}

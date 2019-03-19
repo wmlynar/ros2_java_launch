@@ -130,6 +130,7 @@ public class roslaunch
         help += "  -t TIMEOUT, --timeout=TIMEOUT\n";
         help += "                        override the socket connection timeout (in seconds).\n";
         help += "                        Only valid for core services.\n";
+        help += "  --env-var=\"AAA=bbb\" Define environment variable in the launched process.\n";
 
         PrintLog.info(help);
 	}
@@ -368,6 +369,12 @@ public class roslaunch
 			if (launchFile.isEnabled()) {
 				launchFiles.add(launchFile);
 			}
+		}
+		
+		String env = parsedArgs.getEnvVar();
+		if (env!=null)
+		{
+			NodeManager.setEnvVar(env);
 		}
 
 		// Handle various command line options

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,8 @@ import org.ros2.java.roslaunch.util.Util;
  */
 public class NodeManager
 {
+	private static String envVar = null;
+	
 	/**
 	 * Get the List of NodeTags defined in the tree defined by
 	 * the given List of LaunchFiles.
@@ -389,6 +392,10 @@ public class NodeManager
 //		if (parsedArgs.hasScreen() || isCore) {
 //			logStreams = false;
 //		}
+		
+		if(envVar!=null) {
+			envp = addToArray(envp, envVar);
+		}
 
 		// Launch the node with its environment and the working directory
 		Process proc = launchNodeProcess(
@@ -611,5 +618,15 @@ public class NodeManager
 				allNodes.put(name, filename);
 			}
 		}
+	}
+
+	public static void setEnvVar(String env) {
+		NodeManager.envVar = env;
+	}
+
+	private static String[] addToArray(String[] array, String env) {
+		String[] newArray = Arrays.copyOf(array, array.length + 1);
+		newArray[array.length] = env;
+		return newArray;
 	}
 }
