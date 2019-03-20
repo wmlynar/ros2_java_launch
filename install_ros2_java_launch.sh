@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mvn -o install
+mvn install
 
 sudo chown -R $(id -u):$(id -g) /opt
 mkdir -p /opt/ros2_java/bin
