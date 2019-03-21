@@ -166,6 +166,13 @@ public class ProcessMonitor
 
 			// Handle all respawning processes
 			handleRespawningProcesses();
+			
+			if(m_processes.isEmpty() && m_respawningProcesses.isEmpty()) {
+				// No processes to monitor, quit
+				m_semaphore.release();  // Release before entering shutdown
+				this.shutdown();
+				return;
+			}
 		}
 	}
 
