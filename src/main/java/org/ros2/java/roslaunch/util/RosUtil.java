@@ -75,7 +75,7 @@ public class RosUtil
 	public static String findRos2JavaResource(final String pkg, final String nodeType)
 	{
 		// Check for python resource under the ROS package path
-		String packagePath = EnvVar.ROS2_JAVA_PATH.getReqNonEmpty();
+		String packagePath = EnvVar.ROS2_LAUNCH_PATH.getReqNonEmpty();
 
 		// Check every one of the folders configured in the package path to
 		// determine if it contains the package and node we are looking for
@@ -95,12 +95,12 @@ public class RosUtil
 				else if (matchingFiles.size() == 0)
 				{
 					throw new RuntimeException(
-						"Could not find python resource: " + pkg + " " + nodeType);
+						"Could not find ros2launch resource: " + pkg + " " + nodeType);
 				}
 				else
 				{
 					throw new RuntimeException(
-						"Found multiple python resources for: " + pkg + " " + nodeType);
+						"Found multiple ros2launch resources for: " + pkg + " " + nodeType);
 				}
 			}
 		}

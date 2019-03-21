@@ -18,7 +18,7 @@ public enum EnvVar
 	ROS_PACKAGE_PATH,
 	ROS_ROOT,
 	ROSLAUNCH_SSH_UNKNOWN,
-	ROS2_JAVA_PATH;
+	ROS2_LAUNCH_PATH;
 
 	/**
 	 * Get the value of the environment variable.
