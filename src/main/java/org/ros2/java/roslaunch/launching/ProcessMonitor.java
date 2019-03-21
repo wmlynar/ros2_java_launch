@@ -45,6 +45,15 @@ public class ProcessMonitor
 		m_processes = new ArrayList<RosProcessIF>();
 		m_deadProcesses = new ArrayList<RosProcessIF>();
 		m_respawningProcesses = new HashMap<RosProcessIF, Long>();
+		
+		// install shutdown hook
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				m_semaphore.release();  // Release before entering shutdown
+				shutdown();
+			}
+		});
 	}
 
 	/**
