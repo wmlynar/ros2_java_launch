@@ -766,7 +766,7 @@ public class ArgumentParser
 	{
 		String cleanOption = getCleanOption(option);
 
-		String[] items = cleanOption.split("=");
+		String[] items = cleanOption.split("=", 2);
 		if (items.length == 2)
 		{
 			String optionName = items[0];
