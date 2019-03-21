@@ -76,6 +76,9 @@ public class RosUtil
 	{
 		// Check for python resource under the ROS package path
 		String packagePath = EnvVar.ROS2_LAUNCH_PATH.getReqNonEmpty();
+		
+		
+		List<File> matchingFiles = new ArrayList<>();
 
 		// Check every one of the folders configured in the package path to
 		// determine if it contains the package and node we are looking for
@@ -86,26 +89,25 @@ public class RosUtil
 			if (dir.exists() && dir.isDirectory())
 			{
 				// Python nodes can be stored anywhere in the package
-				List<File> matchingFiles = searchDirectory(dir, nodeType);
-
-				// Return the only matching file, if there is only one
-				if (matchingFiles.size() == 1) {
-					return matchingFiles.get(0).getAbsolutePath();
-				}
-				else if (matchingFiles.size() == 0)
-				{
-					throw new RuntimeException(
-						"Could not find ros2launch resource: " + pkg + " " + nodeType);
-				}
-				else
-				{
-					throw new RuntimeException(
-						"Found multiple ros2launch resources for: " + pkg + " " + nodeType);
-				}
+				List<File> files = searchDirectory(dir, nodeType);
+				matchingFiles.addAll(files);
 			}
 		}
 
-		return "";  // Did not find the python resource
+		// Return the only matching file, if there is only one
+		if (matchingFiles.size() == 1) {
+			return matchingFiles.get(0).getAbsolutePath();
+		}
+		else if (matchingFiles.size() == 0)
+		{
+			throw new RuntimeException(
+				"Could not find ros2launch resource: " + pkg + " " + nodeType);
+		}
+		else
+		{
+			throw new RuntimeException(
+				"Found multiple ros2launch resources for: " + pkg + " " + nodeType);
+		}
 	}
 
 	/**
