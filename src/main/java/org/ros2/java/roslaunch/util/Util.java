@@ -67,19 +67,20 @@ public class Util
 
 		    Process p = pb.start();
 		    InputStream is = p.getInputStream();
-		    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
-		    String output = "";
-		    String line = null;
-		    while ((line = br.readLine()) != null) {
-		    	output += line + "\n";
-		    }
+				String output = "";
+				String line = null;
+				while ((line = br.readLine()) != null) {
+					output += line + "\n";
+				}
 
-		    // Wait for the process to finish
-		    int r = p.waitFor();
-		    if (r == 0) {
-		       return output.trim();
-		    }
+				// Wait for the process to finish
+				int r = p.waitFor();
+				if (r == 0) {
+					return output.trim();
+				}
+			}
 		}
 		catch (Exception e)
 		{

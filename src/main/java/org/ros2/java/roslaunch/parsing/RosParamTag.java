@@ -165,15 +165,16 @@ public class RosParamTag extends BaseTag
 					InputStream inputStream;
 					try
 					{
-						inputStream = new FileInputStream(m_file);
-
-						m_yamlObj = yaml.load(inputStream);
-
-						// Determine if this is a YAML dictionary
-						isYamlDict = isYamlDict(m_yamlObj);
-
-						// Store the yaml content
-						m_yamlContent = yaml.dump(m_yamlObj);
+						try(FileInputStream fileInputStream = new FileInputStream(m_file)) {
+							
+							m_yamlObj = yaml.load(fileInputStream);
+	
+							// Determine if this is a YAML dictionary
+							isYamlDict = isYamlDict(m_yamlObj);
+	
+							// Store the yaml content
+							m_yamlContent = yaml.dump(m_yamlObj);
+						}
 					}
 					catch (Exception e) {
 						throw new RuntimeException(
